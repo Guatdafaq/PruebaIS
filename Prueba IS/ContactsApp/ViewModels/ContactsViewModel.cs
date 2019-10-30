@@ -19,6 +19,7 @@ namespace ContactsApp.ViewModels
     {
 
         #region [Variables]
+        private string controlMessage;
         private string searchCity;
 
         private ObservableCollection<Contact> searchedContacts;
@@ -52,10 +53,27 @@ namespace ContactsApp.ViewModels
             get { return this.searchCity; }
             set
             {
-                if (!string.Equals(this.searchedContacts, value))
+                if (!string.Equals(this.searchCity, value))
                 {
                     this.searchCity = value;
                     OnPropertyChanged("SearchCity");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Mensaje de control para mostrar errores o avisos
+        /// </summary>
+        public string ControlMessage
+        {
+            get { return this.controlMessage; }
+            set
+            {
+                if (!string.Equals(this.controlMessage, value))
+                {
+                    this.controlMessage = value;
+                    OnPropertyChanged("ControlMessage");
                 }
             }
         }
@@ -69,6 +87,7 @@ namespace ContactsApp.ViewModels
         {
             ContactsDB.InitializeContactsDB();
 
+            ControlMessage = "";
             SearchCommand = new CommandBase(param => SearchContacts());
             ListCommand = new CommandBase(param => ListContacts());
         }
@@ -118,7 +137,13 @@ namespace ContactsApp.ViewModels
         /// </summary>
         private void SearchContacts()
         {
-            SearchedContacts = new ObservableCollection<Contact>(ContactsDB.DictionaryContacts[SearchCity]);
+            if (ContactsDB.DictionaryContacts.ContainsKey(SearchCity))
+            {
+                SearchedContacts = new ObservableCollection<Contact>(ContactsDB.DictionaryContacts[SearchCity]);
+                ControlMessage = "";
+            }       
+            else
+                ControlMessage = "There's no one that lives in that city";
         }
 
         /// <summary>
@@ -127,6 +152,7 @@ namespace ContactsApp.ViewModels
         private void ListContacts()
         {
             SearchedContacts = new ObservableCollection<Contact>(ContactsDB.Contacts);
+            ControlMessage = "";
         }
         #endregion
 

@@ -5,33 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactsApp"
         xmlns:viewmodels="clr-namespace:ContactsApp.ViewModels"
+        xmlns:views="clr-namespace:ContactsApp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <viewmodels:ContactsViewModel x:Key="contactViewModel" />
-    </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="45">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="200"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="cityLabelTextBlock" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Text="City" FontSize="15"/>
-                <TextBox x:Name="cityTextBox" Text="{Binding SearchCity, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" Height="20" VerticalAlignment="Center" />
-            </Grid>
-            <Button x:Name="listButton" Command="{Binding ListCommand}" Grid.Row="1" Content="List" Margin="20" />
-            <Button x:Name="searchButton" Command="{Binding SearchCommand}" Grid.Row="2" Content="Search" Margin="20" />
-        </Grid>
-        <DataGrid x:Name="contactsGrid" ItemsSource="{Binding Path=SearchedContacts}" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single"/>
-    </Grid>
+ 
+    <views:ContactsView/>
+
 </Window>
